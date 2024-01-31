@@ -8,15 +8,18 @@ import androidx.appcompat.app.AlertDialog
 import com.fftools.roomdatabase.adapter.NoteAdapter
 import com.fftools.roomdatabase.base.BaseActivity
 import com.fftools.roomdatabase.databinding.ActivityMainBinding
+import com.fftools.roomdatabase.helper.DBHelper
 import com.fftools.roomdatabase.model.Note
 import com.fftools.roomdatabase.my_interface.NoteItemOnClickListener
 import com.fftools.roomdatabase.utils.Constants
 import com.fftools.roomdatabase.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), NoteItemOnClickListener {
     private val viewModel: MainViewModel by viewModel()
     private var adapter: NoteAdapter? = null
+    private val dbHelper: DBHelper by inject()
 
     private val noteLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
@@ -33,9 +36,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NoteItemOnClickListene
         setData()
     }
 
+    private fun updateRecyclerView() {
+        var list = dbHelper.getAllNote()
+        adapter?.submitList(list)
+    }
+
+    override fun onResume() {
+        updateRecyclerView()
+        super.onResume()
+    }
+
     private fun setData() {
 //        viewModel.getNoteList()
     }
+
 
     private fun initObservable() {
 //        viewModel.noteListState.observe(this) {
@@ -46,9 +60,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NoteItemOnClickListene
 //        }
 
         viewModel.noteListDESC.observe(this) {
-            Log.d("duckaa", "Load List ${it.size}")
             adapter?.submitList(it)
         }
+
     }
 
     private fun initEvent() {
@@ -73,9 +87,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NoteItemOnClickListene
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Bạn có chắc chắn muốn xóa không ?")
         alertDialog.setPositiveButton("OK") { _, _ ->
-            viewModel.deleteNote(note) {
-//                viewModel.getNoteList()
-            }
+//            viewModel.deleteNote(note) {
+////                viewModel.getNoteList()
+//            }
+            dbHelper.delete(note.id)
+            updateRecyclerView()
         }
 
         alertDialog.setNegativeButton("Không") { _, _ ->

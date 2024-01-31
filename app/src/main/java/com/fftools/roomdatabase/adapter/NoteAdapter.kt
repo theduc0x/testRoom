@@ -30,7 +30,7 @@ class NoteAdapter(val listener: NoteItemOnClickListener): ListAdapter<Note, Note
             binding.apply {
                 tvTitle.text = item.title
                 tvContent.text = item.content
-                tvDate.text = item.editTime.convertSecondsToDateTime()
+                tvDate.text = "${item.editTime.convertSecondsToDateTime()} + ${item.isSelected}"
 
                 root.setOnClickListener {
                     listener.onClick(item)

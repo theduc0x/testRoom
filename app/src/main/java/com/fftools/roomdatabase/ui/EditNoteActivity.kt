@@ -3,16 +3,20 @@ package com.fftools.roomdatabase.ui
 import android.content.Intent
 import com.fftools.roomdatabase.base.BaseActivity
 import com.fftools.roomdatabase.databinding.ActivityEditNoteBinding
+import com.fftools.roomdatabase.helper.DBHelper
 import com.fftools.roomdatabase.model.Note
 import com.fftools.roomdatabase.utils.Constants.EXTRA_NOTE
 import com.fftools.roomdatabase.utils.Utils.convertSecondsToDateTime
 import com.fftools.roomdatabase.utils.extension.parcelable
 import com.fftools.roomdatabase.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditNoteActivity : BaseActivity<ActivityEditNoteBinding>() {
     private var noteEdit: Note? = null
     private val viewModel: MainViewModel by viewModel()
+    private val dbHelper: DBHelper by inject()
+
 
     override fun createBinding() = ActivityEditNoteBinding.inflate(layoutInflater)
 
@@ -29,10 +33,13 @@ class EditNoteActivity : BaseActivity<ActivityEditNoteBinding>() {
         }
         binding.ivSave.setOnClickListener {
             noteEdit.getNoteUpdate()
-            viewModel.insertNote(noteEdit!!) {
-                val intent = Intent()
-                finish()
-            }
+//            viewModel.insertNote(noteEdit!!) {
+//                val intent = Intent()
+//                finish()
+//            }
+            dbHelper.insert(noteEdit!!)
+            val intent = Intent()
+            finish()
         }
     }
 

@@ -12,14 +12,14 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val noteDao: NoteDao
-): ViewModel() {
+) : ViewModel() {
+
+    val noteListDESC: LiveData<List<Note>> =
+        noteDao.getAllNoteSortByEditTimeDESC().distinctUntilChanged()
+
+
     private val noteList = MutableLiveData<NoteDataState>()
     val noteListState: LiveData<NoteDataState> get() = noteList
-
-    val noteListDESC: LiveData<List<Note>> = noteDao.getAllNoteSortByEditTimeDESC().distinctUntilChanged()
-
-
-
     fun insertNote(note: Note, callback: ((Boolean) -> Unit)? = null) = viewModelScope.launch {
         noteDao.insertNote(note)
         callback?.invoke(true)

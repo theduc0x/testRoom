@@ -23,6 +23,7 @@ interface NoteDao {
     @Query("SELECT * FROM Note")
     fun getAllNote(): List<Note>
 
-    @Query("SELECT * FROM NOTE ORDER BY editTime DESC")
+
+    @Query("SELECT * FROM Note ORDER BY editTime DESC")
     fun getAllNoteSortByEditTimeDESC(): LiveData<List<Note>>
 }

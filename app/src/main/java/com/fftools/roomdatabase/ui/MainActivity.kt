@@ -33,36 +33,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NoteItemOnClickListene
         initView()
         initEvent()
         initObservable()
-        setData()
-    }
-
-    private fun updateRecyclerView() {
-        var list = dbHelper.getAllNote()
-        adapter?.submitList(list)
-    }
-
-    override fun onResume() {
-        updateRecyclerView()
-        super.onResume()
-    }
-
-    private fun setData() {
-//        viewModel.getNoteList()
     }
 
 
     private fun initObservable() {
-//        viewModel.noteListState.observe(this) {
-//            val status = it ?: return@observe
-//            status.result?.let { list ->
-//                adapter?.submitList(list)
-//            }
-//        }
-
         viewModel.noteListDESC.observe(this) {
             adapter?.submitList(it)
         }
-
     }
 
     private fun initEvent() {
@@ -87,11 +64,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), NoteItemOnClickListene
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Bạn có chắc chắn muốn xóa không ?")
         alertDialog.setPositiveButton("OK") { _, _ ->
-//            viewModel.deleteNote(note) {
-////                viewModel.getNoteList()
-//            }
-            dbHelper.delete(note.id)
-            updateRecyclerView()
+            viewModel.deleteNote(note) {
+//                viewModel.getNoteList()
+            }
         }
 
         alertDialog.setNegativeButton("Không") { _, _ ->

@@ -33,13 +33,13 @@ class EditNoteActivity : BaseActivity<ActivityEditNoteBinding>() {
         }
         binding.ivSave.setOnClickListener {
             noteEdit.getNoteUpdate()
-//            viewModel.insertNote(noteEdit!!) {
-//                val intent = Intent()
-//                finish()
-//            }
-            dbHelper.insert(noteEdit!!)
-            val intent = Intent()
-            finish()
+            viewModel.insertNote(noteEdit!!) {
+                val intent = Intent()
+                finish()
+            }
+//            dbHelper.insert(noteEdit!!)
+//            val intent = Intent()
+//            finish()
         }
     }
 

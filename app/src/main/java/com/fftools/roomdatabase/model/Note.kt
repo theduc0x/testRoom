@@ -14,8 +14,7 @@ data class Note(
     val id: Int = 0,
     var title: String = "",
     var content: String = "",
-    var editTime: Long = 0,
-    var isSelected: Boolean = false
+    var editTime: Long = 0
 ): Parcelable
 
 

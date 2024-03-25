@@ -15,7 +15,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class EditNoteActivity : BaseActivity<ActivityEditNoteBinding>() {
     private var noteEdit: Note? = null
     private val viewModel: MainViewModel by viewModel()
-    private val dbHelper: DBHelper by inject()
 
 
     override fun createBinding() = ActivityEditNoteBinding.inflate(layoutInflater)

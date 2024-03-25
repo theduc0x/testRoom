@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [Note::class], // Các bảng
-    version = 1,
+    version = 1, // Khi thay đổi database(bảng, trường) thì tăng version để tự cập nhật
 )
 abstract class DatabaseHelper : RoomDatabase() {
     abstract fun noteDao(): NoteDao
@@ -28,9 +28,7 @@ abstract class DatabaseHelper : RoomDatabase() {
             return instance ?: synchronized(this) {
                 val instanceCreate =
                     Room.databaseBuilder(context, DatabaseHelper::class.java, DATABASE_NAME)
-                        .fallbackToDestructiveMigration()
-//                        .createFromAsset("ok")
-//                        .allowMainThreadQueries() // Có cho gọi trong Main Thread hay không
+//                        .createFromAsset("note.db") // Nêu có sẵn database thì đưa vào đây
                         .addCallback(RoomCallback())
                         .build()
                 instance = instanceCreate

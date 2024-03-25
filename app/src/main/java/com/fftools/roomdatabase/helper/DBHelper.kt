@@ -10,6 +10,7 @@ import com.fftools.roomdatabase.model.Note
 
 class DBHelper(private val context: Context) :
     SQLiteOpenHelper(context, DB_NAME, null, DATABASE_VERSION) {
+
     private val tableName = "Note"
     private val columnID = "id"
     private val columnTitle = "title"
@@ -55,9 +56,6 @@ class DBHelper(private val context: Context) :
 //        onCreate(db)
 
 
-override fun onOpen(db: SQLiteDatabase?) {
-    super.onOpen(db)
-}
 
 
 //Lấy toàn bộ SP

@@ -15,7 +15,7 @@ interface NoteDao {
     suspend fun insertNote(note: Note)
 
     @Update
-    suspend fun  updateNote(note: Note)
+    suspend fun updateNote(note: Note)
 
     @Delete
     suspend fun deleteNote(note: Note)
@@ -23,6 +23,8 @@ interface NoteDao {
     @Query("SELECT * FROM Note")
     fun getAllNote(): List<Note>
 
+    @Query("SELECT id FROM Note")
+    fun getIDNote(): List<Int>
 
     @Query("SELECT * FROM Note ORDER BY editTime DESC")
     fun getAllNoteSortByEditTimeDESC(): LiveData<List<Note>>
